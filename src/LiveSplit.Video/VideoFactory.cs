@@ -1,7 +1,8 @@
-﻿using LiveSplit.Model;
+﻿using System;
+
+using LiveSplit.Model;
 using LiveSplit.UI.Components;
 using LiveSplit.Video;
-using System;
 
 [assembly: ComponentFactory(typeof(VideoFactory))]
 
@@ -15,7 +16,10 @@ namespace LiveSplit.UI.Components
 
         public ComponentCategory Category => ComponentCategory.Media;
 
-        public IComponent Create(LiveSplitState state) => new VideoComponent(state);
+        public IComponent Create(LiveSplitState state)
+        {
+            return new VideoComponent(state);
+        }
 
         public string UpdateName => ComponentName;
 

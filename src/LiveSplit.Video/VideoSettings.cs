@@ -1,13 +1,14 @@
-﻿using LiveSplit.Model;
+﻿using System;
+using System.IO;
+using System.Text.RegularExpressions;
+using System.Web;
+using System.Windows.Forms;
+using System.Xml;
+
+using LiveSplit.Model;
 using LiveSplit.Options;
 using LiveSplit.TimeFormatters;
 using LiveSplit.UI;
-using System;
-using System.Windows.Forms;
-using System.Xml;
-using System.Text.RegularExpressions;
-using System.Web;
-using System.IO;
 
 namespace LiveSplit.Video
 {
@@ -31,9 +32,14 @@ namespace LiveSplit.Video
             set
             {
                 if (Regex.IsMatch(value, "[^0-9:.,-]"))
+                {
                     return;
+                }
 
-                try { Offset = TimeSpanParser.Parse(value); }
+                try
+                {
+                    Offset = TimeSpanParser.Parse(value);
+                }
                 catch (Exception ex)
                 {
                     Log.Error(ex);
@@ -97,9 +103,12 @@ namespace LiveSplit.Video
                 dialog.InitialDirectory = Path.GetDirectoryName(VideoPath);
                 dialog.FileName = Path.GetFileName(VideoPath);
             }
+
             var result = dialog.ShowDialog();
             if (result == DialogResult.OK)
+            {
                 VideoPath = txtVideoPath.Text = dialog.FileName;
+            }
         }
 
         private void VideoSettings_Load(object sender, EventArgs e)
